@@ -1,0 +1,34 @@
+/* color pallete 1: https://colorhunt.co/palette/f6f5f5d3e0ea1687a7276678
+F6F5F5,D3E0EA,1687A7,276678
+ */
+
+body{
+	background-color: #276678;
+    background-attachment: fixed;
+	color: #F6F5F5;
+	font-family: 'Kurale', serif;
+	font-size: larger;
+	margin: 2rem;
+}
+
+nav{
+	/* background-color: #F6F5F5; */
+	background-color: rgba(255, 255, 255, 0.8);
+	/* filter: blur(0.1rem); */
+	border-radius: 1rem;
+	font-size: larger;
+	font-weight: 800;
+	margin-bottom: 2rem;
+}
+
+.navbar-brand{
+	padding-left: 1rem;
+}
+
+.nav-item{
+	padding-left: 1rem;
+}
+
+.nav-link{
+	color: #276678;
+}

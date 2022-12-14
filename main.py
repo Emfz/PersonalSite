@@ -1,8 +1,7 @@
-from flask import Flask, render_template
-from flask_bootstrap import Bootstrap
+from flask import Flask, render_template, url_for
+
 
 app = Flask(__name__)
-Bootstrap(app)
 
 @app.route("/")
 def home():
