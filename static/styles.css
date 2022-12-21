@@ -3,10 +3,31 @@ F6F5F5,D3E0EA,1687A7,276678
  */
 
 :root{
-	--lighter: #F6F5F5;
-	--light: #D3E0EA;
-	--dark: #1687A7;
-	--darker: #276678;
+	/* Colors */
+	--lighter: #D4C2FC;
+	--light: #7353BA;
+	--dark: #27173e;
+	--darker: #070511;
+	--lightTranpsarent: #7353BAD9;
+	--darkTransparent: #0f0f23D9;
+	
+	/* Text animation section */
+	--neon-text-color: rgb(255, 255, 255);
+	--neon-border-color: rgb(106, 0, 255);
+	--text-shadow-config:	-0.2rem -0.2rem 1.5rem #fff,	
+							0.2rem 0.2rem 1.5rem #fff,
+							-0.3rem -0.3rem 2rem var(--neon-border-color),
+							0.3rem 0.3rem 2rem var(--neon-border-color);
+	/* --height1: 0;
+	--height2: -9.5vw;
+	--height3: -19vw;
+	--height4: -28.5vw;
+	--height5: -38.5vw; */
+	--height1: -3vw;
+	--height2: -23vw;
+	--height3: -45vw;
+	--height4: -68vw;
+	--height5: -90vw;
 }
 
 body{
@@ -24,8 +45,7 @@ body{
 /* Navbar */
 
 nav{
-	/* background-color: var(--lighter); */
-	background-color: rgba(246, 246, 245, 0.9);
+	background-color: var(--lightTranpsarent);
 	border-radius: 1rem;
 	font-size: larger;
 	font-weight: 800;
@@ -41,7 +61,7 @@ nav{
 }
 
 .nav-link{
-	color: var(--darker);
+	color: var(--lighter);
 }
 
 /* --------------------------------------------------------------------------------------------------------------------------- */
@@ -51,18 +71,18 @@ nav{
 	padding: 50px;
 }
 
+.home-page{
+	font-size: 14vw;
+}
+
 .light-section{
-	background-color: var(--light);
+	background-color: var(--dark);
 	padding: 50px;
-	color: var(--darker);
+	color: var(--lighter);
 }
 
 .centered{
 	text-align: center;
-}
-
-.title{
-	font-size: 8vw;
 }
 
 .blue-emphasize{
@@ -112,10 +132,11 @@ nav{
 /* --------------------------------------------------------------------------------------------------------------------------- */
 /* Text animation */
 .animation {
-	height: 10vw;
-	/* overflow: hidden; */
-	overflow-y: hidden;
-	overflow-x: auto;
+	height: 16vw;
+	overflow: hidden;
+	font-family: 'Josefin Slab', serif;
+	font-weight: 400;
+	font-style: italic;
 	/* margin-left: 0rem; */
 }
 
@@ -123,77 +144,94 @@ nav{
 	/* padding: 0.1rem 0.5rem; */
 	/* height: 10rem; */
 	/* margin-bottom: 2.81rem; */
-	display:inline-block;
+	display: inline-block;
+	line-height: 2;
 }  
 
 .animation div:first-child {
-	animation: text-animation 30s infinite;
+	animation: text-animation 15s infinite;
 }
 
 @keyframes text-animation {
 	0%{
-		margin-top: 0;
-		color: var(--light);
+		margin-top: var(--height1);
+		color: var(--darker);
+		text-shadow: none;
 	}
 	10%{
-		margin-top: 0;
-		color: var(--darker);
+		margin-top: var(--height1);
+		color: var(--neon-text-color);
+		text-shadow: var(--text-shadow-config);
 	}
 	19%{
-		margin-top: 0;
-		color: var(--light);
+		margin-top: var(--height1);
+		color: var(--darker);
+		text-shadow: none;
 	}
 	20%{
-		margin-top: -10vw;
-		color:var(--light)
+		margin-top: var(--height2);
+		color:var(--darker);
+		text-shadow: none;
 	}
 	30%{
-		margin-top: -10vw;
-		color: var(--darker);
+		margin-top: var(--height2);
+		color: var(--neon-text-color);
+		text-shadow: var(--text-shadow-config);
 	}
 	39%{
-		margin-top: -10vw;
-		color: var(--light);
+		margin-top: var(--height2);
+		color: var(--darker);
+		text-shadow: none;
 	}
 	40%{
-		margin-top: -20vw;
-		color: var(--light);
+		margin-top: var(--height3);
+		color: var(--darker);
+		text-shadow: none;
 	}
 	50%{
-		margin-top: -20vw;
-		color: var(--darker);
+		margin-top: var(--height3);
+		color: var(--neon-text-color);
+		text-shadow: var(--text-shadow-config);
 	}
 	59%{
-		margin-top: -20vw;
-		color: var(--light);
+		margin-top: var(--height3);
+		color: var(--darker);
+		text-shadow: none;
 	}
 	60%{
-		margin-top: -30vw;
-		color: var(--light);
+		margin-top: var(--height4);
+		color: var(--darker);
+		text-shadow: none;
 	}
 	70%{
-		margin-top: -30vw;
-		color: var(--darker);
+		margin-top: var(--height4);
+		color: var(--neon-text-color);
+		text-shadow: var(--text-shadow-config);
 	}
 	79%{
-		margin-top: -30vw;
-		color: var(--light);
+		margin-top: var(--height4);
+		color: var(--darker);
+		text-shadow: none;
 	}
 	80%{
-		margin-top: -40vw;
-		color: var(--light);
+		margin-top: var(--height5);
+		color: var(--darker);
+		text-shadow: none;
 	}
 	90%{
-		margin-top: -40vw;
-		color: var(--darker);
+		margin-top: var(--height5);
+		color: var(--neon-text-color);
+		text-shadow: var(--text-shadow-config);
 	}
 	99%{
-		margin-top: -40vw;
-		color: var(--light);
+		margin-top: var(--height5);
+		color: var(--darker);
+		text-shadow: none;
 	}
 	100%{
-		margin-top: 0vw;
-		color: var(--light);
+		margin-top: var(--height1);
+		color: var(--darker);
+		text-shadow: none;
 	}
 	
 }
