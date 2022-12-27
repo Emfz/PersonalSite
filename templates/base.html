@@ -24,9 +24,12 @@
 	{% endblock %}
 
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 	{% include "navbar.html" %}
+	
 	{% block content %}
 	{% endblock %}
+
+	{% include "footer.html" %}
 </body>
 </html>

@@ -5,7 +5,7 @@ F6F5F5,D3E0EA,1687A7,276678
 :root{
 	/* Colors */
 	--lighter: #D4C2FC;
-	--light: #7353BA;
+	--light: #8b71af;
 	--dark: #27173e;
 	--darker: #070511;
 	--lightTranpsarent: #7353BAD9;
@@ -18,11 +18,6 @@ F6F5F5,D3E0EA,1687A7,276678
 							0.2rem 0.2rem 1.5rem #fff,
 							-0.3rem -0.3rem 2rem var(--neon-border-color),
 							0.3rem 0.3rem 2rem var(--neon-border-color);
-	/* --height1: 0;
-	--height2: -9.5vw;
-	--height3: -19vw;
-	--height4: -28.5vw;
-	--height5: -38.5vw; */
 	--height1: -3vw;
 	--height2: -23vw;
 	--height3: -45vw;
@@ -32,12 +27,10 @@ F6F5F5,D3E0EA,1687A7,276678
 
 body{
 	background-color: var(--darker);
-    background-attachment: fixed;
 	color: var(--lighter);
 	font-family: 'Kurale', serif;
 	font-size: 1.5rem;
 	line-height: 1.5;
-	/* margin: 2rem; */
 }
 
 
@@ -64,30 +57,46 @@ nav{
 	color: var(--lighter);
 }
 
+
+
 /* --------------------------------------------------------------------------------------------------------------------------- */
 /* Sections */
-.dark-section{
+.darker-section{
 	background-color: var(--darker);
 	padding: 50px;
+}
+
+.dark-section{
+	background-color: var(--dark);
+	padding: 50px;
+	color: var(--lighter);
+}
+
+.light-section{
+	background-color: var(--light);
+	padding: 50px;
+	color: var(--darker);
 }
 
 .home-page{
 	font-size: 14vw;
 }
 
-.light-section{
-	background-color: var(--dark);
-	padding: 50px;
-	color: var(--lighter);
-}
 
 .centered{
 	text-align: center;
 }
 
-.blue-emphasize{
+/* .blue-emphasize{
 	color: var(--dark);
 	display: inline;
+} */
+
+.subtitle{
+	font-size: 2.5rem;
+	margin-bottom: 2rem;
+	margin-top: 2rem;
+	text-decoration: underline;
 }
 
 .white-emphasize{
@@ -105,11 +114,13 @@ nav{
 	font-size: small;
 	line-height: 1.5;
 	padding: 0.5rem;
+	margin-top: 1rem;
 }
 
 .socials-link{
 	font-size: 2rem;
 	line-height: 0;
+	color: var(--light);
 }
 
 .socials-link:hover{
@@ -118,7 +129,7 @@ nav{
 }
 
 .text-link{
-	color: var(--darker);
+	color: var(--light);
 	font-weight: 600;
 	margin: 1rem;
 }
@@ -126,6 +137,80 @@ nav{
 .text-link:hover{
 	color: var(--lighter);
 }
+
+
+
+/* --------------------------------------------------------------------------------------------------------------------------- */
+/* Decorations */
+.hr-dots{
+	border-top: dotted;
+	border-width: 10px;
+	width: 15%;
+	margin: 20px auto;
+	color: white;
+}
+
+.hr-thick{
+	border: none;
+	background-color: var(--lighter);
+	height: 2px;
+}
+
+
+
+
+
+/* --------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------------------- */
+/* CV */
+.dark-card-section{
+	background-color: var(--dark);
+	color: var(--lighter);
+}
+
+.card-image-container{
+	background-color: var(--lighter);
+}
+
+.card-image{
+	padding: 1rem;
+	width: 200px;
+}
+
+.cv-card{
+	max-width: 100%;
+}
+
+
+#programming-card{
+	background-image: url("h2.png");
+	color: var(--lighter);
+}
+
+#electronics-card{
+	background-image: url("board.jpg");
+}
+
+#control-card{
+	background-image: url("control.jpg");
+}
+
+.skills-card{
+	border-color: var(--lighter);
+	color: var(--lighter);
+	margin-bottom: 50px;
+}
+
+.card-header{
+	background-color: var(--darker);
+	color: var(--lighter);
+}
+
+.skills-container{
+	padding: 50px;
+}
+
 
 
 

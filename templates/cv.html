@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="container-fluid">
+		<div class="row align">
+			<!-- Left columnt -->
+			<div class="col-sm-12 col-md-4 dark-section">
+				<h2 class="subtitle">
+					About me
+				</h2>
+				<p>
+					I'm an electrical & electronics engineer with a passion for imagining, designing and materializing technologically advanced products.
+				</p>
+				<hr class="hr-dots">
+				<p>
+					My fields of expertise include: programming, control engineering, circuit design, robotics, automation and CAD.
+				</p>
+				<hr class="hr-dots">
+				<p>
+					I'm always trying to learn something new. I'm a great listener. I'm open minded. I highly value honesty. I enjoy solving problems.
+				</p>
+				<!-- -------------------------------------------------------------------------------------------------------- -->
+				<h2 class="subtitle">
+					Languages
+				</h2>
+				English (C1)
+				<!-- -------------------------------------------------------------------------------------------------------- -->
+				<h2 class="subtitle">
+					Social media
+				</h2>
+				<a href="https://mx.linkedin.com/"><i class="bi bi-linkedin socials-link"></i></a>
+			</div>
+
+
+
+			<!-- Right column -->
+			<div class="col-sm-12 col-md-8 light-section">
+				<h2 class="subtitle">
+					Academic background
+				</h2>
+
+				<div class="card mb-3 cv-card">
+					<div class="row g-0 align-items-center card-image-container">
+						<div class="col-md-3 align-middle text-center">
+							<img src=" {{ url_for('static', filename = 'unam.png') }} " class="img-fluid rounded-start card-image" alt="...">
+						</div>
+						<div class="col-md-9 dark-card-section">
+							<div class="card-body">
+								<h2 class="subtitle">Electrical & Electronics Engineer</h2>
+								<p class="card-text">Universidad Nacional Autónoma de México - Facultad de Ingeniería</p>
+								<hr class="hr-thick">
+								<p class="card-text">Robotics, programming, industrial automation, control engineering, electronics, CAD.</p>
+								<p class="card-text"><small class="text-muted">2013-2018</small></p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="card cv-card">
+					<div class="row g-0 align-items-center card-image-container">
+						<div class="col-md-3 text-center">
+							<img src=" {{ url_for('static', filename = 'unam.png') }} " class="img-fluid rounded-start card-image" alt="...">
+						</div>
+						<div class="col-md-9 dark-card-section">
+							<div class="card-body">
+								<h2 class="subtitle">Master of Engineering</h2>
+								<h3 class="card-text">Universidad Nacional Autónoma de México - Facultad de Ingeniería</h3>
+								<hr class="hr-thick">
+								<p class="card-text">Modelling, simulation and control of linear and non-linear physical systems. Control algorithms.</p>
+								<p class="card-text"><small class="text-muted">2018-2021</small></p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
+
+			</div>
+		</div>
+	</div>
+	
+
+
+
+	<!-- Skills cards -->
+	<div class="container-fluid skills-container">
+		<h2 class="subtitle">
+			Skills
+		</h2>
+
+		<div class="bg-image card shadow-1-strong skills-card" id="programming-card">
+			<div class="card-body">
+				<div class="card-header">
+					<h5 class="card-title">Programming</h5>
+				</div>
+				
+				<p>Languages: Python, C++, C, Assembly</p>
+				<p>Source control: Git, Github</p>
+				<p>Web development: Flask, HTML, CSS, Jinja</p>
+				<p>Databases: SQL</p>
+				<p>Etc: OOP, clean code, unit tests, beautiful soup, selenium, pandas</p>
+				<!-- <a href="#!" class="btn btn-outline-light">Button</a> -->
+			</div>
+		</div>
+
+		<div class="bg-image card shadow-1-strong skills-card" id="electronics-card">
+			<div class="card-body">
+				<div class="card-header">
+					<h5 class="card-title">Electronics</h5>
+				</div>
+				
+				<p>Analog & digital electronics</p>
+				<p>Printed Circuit Boards</p>
+				<p>Power electronics</p>
+				<p>Simulation (Proteus)</p>
+				<p>CAD (Solidworks)</p>
+				<p>Etc: Prototyping, soldering, oscilloscope, multimeter, schemataics, board repairing.</p>
+				<!-- <a href="#!" class="btn btn-outline-light">Button</a> -->
+			</div>
+		</div>
+		
+
+		<div class="bg-image card shadow-1-strong skills-card" id="control-card">
+			<div class="card-body">
+				<div class="card-header">
+					<h5 class="card-title">Control & Automation</h5>
+				</div>
+				
+				<p>Allen-Bradley PLC's</p>
+				<p>Robotics</p>
+				<p>Mathematical modelling & simulation of physical systems</p>
+				<p>Analysis of linear and non-linear physical systems</p>
+				<p>Control algorithms</p>
+				<!-- <a href="#!" class="btn btn-outline-light">Button</a> -->
+			</div>
+		</div>
+	</div>
+
+	
+	
+{% endblock %}
+
