@@ -10,6 +10,8 @@ F6F5F5,D3E0EA,1687A7,276678
 	--darker: #070511;
 	--lightTranpsarent: #7353BAD9;
 	--darkTransparent: #0f0f23D9;
+	--darkRedTransparent: rgba(76, 3, 3, 0.4);
+	--lightBlueTransparent: rgba(63, 4, 241, 0.25);
 	
 	/* Text animation section */
 	--neon-text-color: rgb(255, 255, 255);
@@ -27,6 +29,7 @@ F6F5F5,D3E0EA,1687A7,276678
 
 body{
 	background-color: var(--darker);
+	background: linear-gradient(0deg, var(--dark) 0%, var(--darker) 80%);
 	color: var(--lighter);
 	font-family: 'Kurale', serif;
 	font-size: 1.5rem;
@@ -200,6 +203,57 @@ nav{
 
 
 /* --------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------------------- */
+/* Portfolio */
+
+.portfolio-container{
+	padding: 0 5%;
+}
+
+.portfolio-card{
+	border-color: var(--lighter);
+	color: var(--lighter);
+	margin-bottom: 50px;
+	/* max-width: 50%; */
+	/* background-color: var(--whiteTransparent); */
+	background-color: var(--darker);
+	background: linear-gradient(0deg, var(--darkRedTransparent) 0%, var(--lightBlueTransparent) 80%);
+}
+
+.portfolio-card-header{
+	font-size: 2rem;
+	text-decoration: underline;
+	color: var(--lighter);
+}
+
+.portfolio-card-header:hover{
+	color: white;
+}
+
+.portfolio-card-subtitle{
+	font-size: 1.5rem;
+	font-style: italic;
+}
+
+.portfolio-card-date-tag{
+	font-size: 1.25rem;
+	color: var(--light);
+	display: inline;
+}
+
+.language-tag{
+	display: inline;
+	font-size: 1.25rem;
+	background-color: var(--lightTranpsarent);
+	border-radius: 7px;
+	padding: 0px 7px;
+}
+
+
+
+
+/* --------------------------------------------------------------------------------------------------------------------------- */
 /* Text animation */
 .animation {
 	height: 16vw;
@@ -227,81 +281,97 @@ nav{
 		margin-top: var(--height1);
 		color: var(--darker);
 		text-shadow: none;
+		opacity: 0;
 	}
 	10%{
 		margin-top: var(--height1);
 		color: var(--neon-text-color);
 		text-shadow: var(--text-shadow-config);
+		opacity: 1;
 	}
 	19%{
 		margin-top: var(--height1);
 		color: var(--darker);
 		text-shadow: none;
+		opacity: 0;
 	}
 	20%{
 		margin-top: var(--height2);
 		color:var(--darker);
 		text-shadow: none;
+		opacity: 0;
 	}
 	30%{
 		margin-top: var(--height2);
 		color: var(--neon-text-color);
 		text-shadow: var(--text-shadow-config);
+		opacity: 1;
 	}
 	39%{
 		margin-top: var(--height2);
 		color: var(--darker);
 		text-shadow: none;
+		opacity: 0;
 	}
 	40%{
 		margin-top: var(--height3);
 		color: var(--darker);
 		text-shadow: none;
+		opacity: 0;
 	}
 	50%{
 		margin-top: var(--height3);
 		color: var(--neon-text-color);
 		text-shadow: var(--text-shadow-config);
+		opacity: 1;
 	}
 	59%{
 		margin-top: var(--height3);
 		color: var(--darker);
 		text-shadow: none;
+		opacity: 0;
 	}
 	60%{
 		margin-top: var(--height4);
 		color: var(--darker);
 		text-shadow: none;
+		opacity: 0;
 	}
 	70%{
 		margin-top: var(--height4);
 		color: var(--neon-text-color);
 		text-shadow: var(--text-shadow-config);
+		opacity: 1;
 	}
 	79%{
 		margin-top: var(--height4);
 		color: var(--darker);
 		text-shadow: none;
+		opacity: 0;
 	}
 	80%{
 		margin-top: var(--height5);
 		color: var(--darker);
 		text-shadow: none;
+		opacity: 0;
 	}
 	90%{
 		margin-top: var(--height5);
 		color: var(--neon-text-color);
 		text-shadow: var(--text-shadow-config);
+		opacity: 1;
 	}
 	99%{
 		margin-top: var(--height5);
 		color: var(--darker);
 		text-shadow: none;
+		opacity: 0;
 	}
 	100%{
 		margin-top: var(--height1);
 		color: var(--darker);
 		text-shadow: none;
+		opacity: 0;
 	}
 	
 }
