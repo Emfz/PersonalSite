@@ -1,7 +1,10 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect
 import time
+from datetime import date
 from flask_sqlalchemy import SQLAlchemy
-
+from wtforms import Form, PasswordField, StringField, TextAreaField, SelectMultipleField, SubmitField, DateField
+from wtforms.validators import DataRequired
+from flask_ckeditor import CKEditor, CKEditorField
 
 
 app = Flask(__name__)
@@ -9,8 +12,22 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///portfolio.db"
 database = SQLAlchemy(app)
 
-year = time.localtime().tm_year
+ckeditor = CKEditor(app)
 
+# today = time.localtime()
+today = date.today()
+# year = today.tm_year
+year = today.year
+
+
+
+class PortfolioEntryCreationForm(Form):
+	title = StringField("Title", validators = [DataRequired()])
+	subtitle = StringField("Subtitle")
+	abstract = StringField("Abstract")
+	category_tag = SelectMultipleField("Tags", choices = ["C++", "Python", "Java", "C", "Web", "Electronics", "Control", "Robotics"])
+	body = CKEditorField("Body", validators = [DataRequired()])	
+	submit = SubmitField()
 
 class PortfolioEntry(database.Model):
 	id = database.Column(database.Integer, primary_key = True)
@@ -18,7 +35,7 @@ class PortfolioEntry(database.Model):
 	subtitle = database.Column(database.String(150))
 	abstract = database.Column(database.String(300))
 	category_tag = database.Column(database.String(100))
-	date = database.Column(database.String(10), nullable = False)
+	date = database.Column(database.Date, nullable = False)
 	body = database.Column(database.Text, nullable = False)
 
 
@@ -47,6 +64,28 @@ def cv():
 def portfolio():
 	posts = PortfolioEntry.query.all()
 	return render_template("portfolio.html", year = year, posts = posts)
+
+@app.route("/portfolio/<int:id>")
+def portfolio_entry(id):
+	post = database.get_or_404(PortfolioEntry, id)
+	return render_template("portfolioEntryTemplate.html", year = year, post = post)
+
+@app.route("/portfolio/add-entry", methods = ["GET", "POST"])
+def create_portfolio_entry():
+	form = PortfolioEntryCreationForm(request.form)
+	if request.method == "POST" and form.validate():
+		date = today
+		new_entry = PortfolioEntry(title = form.title.data,
+						subtitle = form.subtitle.data,
+						abstract = form.abstract.data,
+						category_tag = ','.join(form.category_tag.data),
+						date = date,
+						body = form.body.data)
+		database.session.add(new_entry)
+		database.session.commit()
+		return redirect(url_for('portfolio'))
+	return render_template("newPost.html", year = year, form = form)
+
 
 
 if __name__ == "__main__":

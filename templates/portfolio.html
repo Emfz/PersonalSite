@@ -16,7 +16,7 @@
 
 					<div class="card portfolio-card">
 						<div class="card-body">
-							<a class="portfolio-card-header" href=" {{ url_for('home') }}">{{ post.title }}</a>
+							<a class="portfolio-card-header" href=" {{ url_for('portfolio_entry', id = post.id) }}">{{ post.title }}</a>
 							<h3 class="portfolio-card-subtitle">{{ post.subtitle }}</h3>
 
 							<hr class="hr-thick">

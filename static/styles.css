@@ -16,8 +16,9 @@ F6F5F5,D3E0EA,1687A7,276678
 	/* Text animation section */
 	--neon-text-color: rgb(255, 255, 255);
 	--neon-border-color: rgb(106, 0, 255);
-	--text-shadow-config:	-0.2rem -0.2rem 1.5rem #fff,	
-							0.2rem 0.2rem 1.5rem #fff,
+	--neon-border-color2: rgb(212, 0, 255);
+	--text-shadow-config:	-0.2rem -0.2rem 1.5rem var(--neon-border-color2),	
+							0.2rem 0.2rem 1.5rem var(--neon-border-color2),
 							-0.3rem -0.3rem 2rem var(--neon-border-color),
 							0.3rem 0.3rem 2rem var(--neon-border-color);
 	--height1: -3vw;
@@ -250,6 +251,70 @@ nav{
 	padding: 0px 7px;
 }
 
+
+/* --------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------------------- */
+/* Portfolio entries*/
+.portfolio-entry-title{
+	border: solid;
+	border-color: white;
+	border-radius: 20px;
+	box-shadow: 5px 5px 10px var(--neon-border-color),
+				-5px 5px 10px var(--neon-border-color2),
+				5px -5px 10px var(--neon-border-color),
+				-5px -5px 10px var(--neon-border-color2);
+
+	display: inline-block;
+	font-size: 3rem;
+	margin: 30px;
+	padding: 25px;
+	text-shadow: 5px 5px 10px var(--neon-border-color),
+				-5px 5px 10px var(--neon-border-color2),
+				5px -5px 10px var(--neon-border-color),
+				-5px -5px 10px var(--neon-border-color2);
+}
+
+.portfolio-entry-subtitle{
+	font-style: italic;
+	font-size: 1.8rem;
+	text-shadow: 2px 2px 2px var(--neon-border-color);
+}
+
+.portfolio-entry-body{
+	padding: 20px 25px;
+}
+
+.portfolio-entry-date-and-tags{
+	font-style: italic;
+	font-size: 1rem;
+}
+
+
+/* --------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------------------------- */
+/* Create new portfolio entry */
+.form-container{
+	padding: 30px;
+}
+
+input{
+	background-color: var(--darker);
+	border-radius: 10px;
+	color: var(--lighter);
+	min-width: 100%;
+}
+
+#category_tag{
+	background-color: var(--darker);
+	color: var(--lighter);
+	display: block;
+}
+
+#submit{
+	margin-top: 50px;
+}
 
 
 

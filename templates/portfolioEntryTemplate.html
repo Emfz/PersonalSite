@@ -1,1 +1,14 @@
 {% extends "base.html" %}
+
+{% block content %}
+	<div class="container-fluid">
+		<div class="text-center">
+			<h1 class="portfolio-entry-title">{{ post.title }}</h1>	
+			<h2 class="portfolio-entry-subtitle">{{ post.subtitle }}</h2>
+		</div>
+	</div>
+	<div class="container-fluid portfolio-entry-body">
+		<h3 class="portfolio-entry-date-and-tags">Posted by Enrique Martínez Fernández on {{ post.date }}. Tags: {{ post.category_tag.replace(",", "/") }}</h3>
+		{{ post.body | safe}}
+	</div>
+{% endblock %}
