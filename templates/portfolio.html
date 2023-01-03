@@ -12,45 +12,29 @@
 
 			<div class="col-sm-12 col-md-8">
 			
-				{% for post in posts: %}
+				{% for entry in entries: %}
 
 					<div class="card portfolio-card">
 						<div class="card-body">
-							<a class="portfolio-card-header" href=" {{ url_for('portfolio_entry', id = post.id) }}">{{ post.title }}</a>
-							<h3 class="portfolio-card-subtitle">{{ post.subtitle }}</h3>
+							<a class="portfolio-card-header" href=" {{ url_for('portfolio_entry', id = entry.id) }}">{{ entry.title }}</a>
+							<h3 class="portfolio-card-subtitle">{{ entry.subtitle }}</h3>
 
 							<hr class="hr-thick">
-							<p>{{ post.abstract }}</p>
-							{% for tag in post.category_tag.split(",") %}
+							<p>{{ entry.abstract }}</p>
+							{% for tag in entry.category_tag.split(",") %}
 								<p class="language-tag">{{ tag }}</p>
 							{% endfor %}
 							<p class="portfolio-card-date-tag">
-								| Post date: {{ post.date }}
+								| entry date: {{ entry.date }}
 								{% if current_user.is_authenticated: %}
 									<a href="" class="edit-icon"><i class="bi bi-pencil-fill"></i></a>
-									<a href="{{ url_for('delete_confirmation', id = post.id) }}" class="edit-icon"><i class="bi bi-file-earmark-x-fill"></i></a>
+									<a href="{{ url_for('delete_confirmation', id = entry.id) }}" class="edit-icon"><i class="bi bi-file-earmark-x-fill"></i></a>
 								{% endif %}
 							</p>
 						</div>
 					</div>
 
 				{% endfor %}
-
-				<!-- <div class="card portfolio-card">
-					<div class="card-body">
-						<a class="portfolio-card-header" href=" {{ url_for('home') }}">The life of a cactus</a>
-						<h3 class="portfolio-card-subtitle">Who knew cacti lived such interesting lives?</h3>
-
-						<hr class="hr-thick">
-						<p>Abstract about this entry.</p>
-						<p class="portfolio-card-date-tag">Tags: </p>
-						<p class="language-tag">c++</p>
-						<p class="language-tag">python</p>
-						<p class="portfolio-card-date-tag">| Post date: 12/08/2021</p>
-
-					</div>
-				</div> -->
-
 			</div>
 			
 		</div>		

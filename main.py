@@ -77,13 +77,13 @@ def cv():
 
 @app.route("/portfolio")
 def portfolio():
-	posts = PortfolioEntry.query.all()
-	return render_template("portfolio.html", year = year, posts = posts)
+	entries = PortfolioEntry.query.all()
+	return render_template("portfolio.html", year = year, entries = entries)
 
 @app.route("/portfolio/<int:id>")
 def portfolio_entry(id):
-	post = database.get_or_404(PortfolioEntry, id)
-	return render_template("portfolioEntryTemplate.html", year = year, post = post)
+	entry = database.get_or_404(PortfolioEntry, id)
+	return render_template("portfolioEntryTemplate.html", year = year, entry = entry)
 
 @login_required
 @app.route("/portfolio/add-entry", methods = ["GET", "POST"])
@@ -100,7 +100,7 @@ def create_portfolio_entry():
 		database.session.add(new_entry)
 		database.session.commit()
 		return redirect(url_for('portfolio'))
-	return render_template("newPost.html", year = year, form = form)
+	return render_template("newEntry.html", year = year, form = form)
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
