@@ -8,6 +8,7 @@
 		<p class="text-link"><a href="{{ url_for('login') }}">Admin login</a></p>
 		{% else: %}
 			<p class="text-link"><a href="{{ url_for('logout') }}">Log out</a></p>
+			<p class="text-link"><a href="{{ url_for('create_portfolio_entry') }}">Create entry</a></p>
 		{% endif %}
 	</div>
 </footer>

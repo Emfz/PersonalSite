@@ -120,6 +120,7 @@ nav{
 }
 
 .text-link{
+	display: inline;
 	color: var(--light);
 	text-decoration: none;
 	font-weight: 600;
