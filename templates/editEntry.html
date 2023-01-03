@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="container-fluid">
+
+		<div class="text-center">
+			<h1 class="portfolio-entry-title">Edit portfolio entry</h1>
+		</div>
+		
+
+		<div class="container-fluid form-container">
+			<form method="POST" action="{{ url_for('edit_entry', id = id) }}">
+				{{ form.title.label }}
+				{{ form.title() }}
+				
+				{{ form.subtitle.label }}
+				{{ form.subtitle() }}
+
+				{{ form.abstract.label }}
+				{{ form.abstract() }}
+
+				{{ form.category_tag.label }}
+				{{ form.category_tag() }}
+
+				{{ form.body.label }}
+				{{ form.body() }}
+
+				{{ ckeditor.load() }}
+				{{ ckeditor.config(name='body') }}
+
+				{{ form.submit() }}
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

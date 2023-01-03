@@ -131,6 +131,27 @@ def delete(id):
 	database.session.commit()
 	return redirect(url_for('portfolio'))
 
+@app.route("/portfolio/edit/<int:id>", methods = ["GET", "POST"])
+@login_required
+def edit_entry(id):
+	entry = database.get_or_404(PortfolioEntry, id)
+	if request.method == "POST":
+		form = PortfolioEntryCreationForm(request.form)
+		entry.title = form.title.data
+		entry.subtitle = form.subtitle.data
+		entry.abstract = form.abstract.data
+		entry.category_tag = ','.join(form.category_tag.data)
+		entry.body = form.body.data
+		database.session.commit()
+		return redirect(url_for('portfolio'))
+	else:	
+		form = PortfolioEntryCreationForm(title = entry.title,
+									subtitle = entry.subtitle,
+									abstract = entry.abstract,
+									category_tag = entry.category_tag.split(","),
+									body = entry.body)
+	return render_template("editEntry.html", year = year, form = form, id = entry.id)
+
 
 # Login manager
 @login_manager.user_loader
