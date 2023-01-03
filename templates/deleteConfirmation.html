@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="container-fluid text-center">
+		<h1>Delete confirmation</h1>
+	</div>
+	<div class="container-fluid">
+		<p>You're about to delete entry {{ entry.id }}.</p>
+		<p>Title: {{ entry.title }}</p>
+		<p>Subtitle: {{ entry.subtitle }}</p>
+		<p>Abstract: {{ entry.abstract }}</p>
+
+		<h1>Are you sure?</h1>
+		
+		<form action="{{ url_for('portfolio') }}" method="get">
+			<button class="btn btn-secondary" type="submit">Cancel</button>
+		</form>
+		
+		<form action="{{ url_for('delete', id = entry.id) }}" method="post">
+			<button class="btn btn-danger" type="submit">Confirm</button>
+		</form>
+	</div>
+{% endblock %}

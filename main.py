@@ -85,6 +85,7 @@ def portfolio_entry(id):
 	post = database.get_or_404(PortfolioEntry, id)
 	return render_template("portfolioEntryTemplate.html", year = year, post = post)
 
+@login_required
 @app.route("/portfolio/add-entry", methods = ["GET", "POST"])
 def create_portfolio_entry():
 	form = PortfolioEntryCreationForm(request.form)
@@ -114,6 +115,21 @@ def login():
 			return redirect(url_for('portfolio'))
 		flash("Incorrect credentials")
 	return render_template("login.html", form = form)
+
+
+@login_required
+@app.route("/portfolio/delete-confirmation/<int:id>")
+def delete_confirmation(id):
+	entry = database.get_or_404(PortfolioEntry, id)
+	return render_template("deleteConfirmation.html", year = year, entry = entry)
+
+@login_required
+@app.route("/portfolio/delete/<int:id>", methods = ["POST"])
+def delete(id):
+	entry = database.get_or_404(PortfolioEntry, id)
+	database.session.delete(entry)
+	database.session.commit()
+	return redirect(url_for('portfolio'))
 
 
 # Login manager

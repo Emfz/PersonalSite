@@ -28,7 +28,7 @@
 								| Post date: {{ post.date }}
 								{% if current_user.is_authenticated: %}
 									<a href="" class="edit-icon"><i class="bi bi-pencil-fill"></i></a>
-									<a href="" class="edit-icon"><i class="bi bi-file-earmark-x-fill"></i></a>
+									<a href="{{ url_for('delete_confirmation', id = post.id) }}" class="edit-icon"><i class="bi bi-file-earmark-x-fill"></i></a>
 								{% endif %}
 							</p>
 						</div>
