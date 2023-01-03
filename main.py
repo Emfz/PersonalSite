@@ -85,8 +85,8 @@ def portfolio_entry(id):
 	entry = database.get_or_404(PortfolioEntry, id)
 	return render_template("portfolioEntryTemplate.html", year = year, entry = entry)
 
-@login_required
 @app.route("/portfolio/add-entry", methods = ["GET", "POST"])
+@login_required
 def create_portfolio_entry():
 	form = PortfolioEntryCreationForm(request.form)
 	if request.method == "POST" and form.validate():
@@ -117,14 +117,14 @@ def login():
 	return render_template("login.html", form = form)
 
 
-@login_required
 @app.route("/portfolio/delete-confirmation/<int:id>")
+@login_required
 def delete_confirmation(id):
 	entry = database.get_or_404(PortfolioEntry, id)
 	return render_template("deleteConfirmation.html", year = year, entry = entry)
 
-@login_required
 @app.route("/portfolio/delete/<int:id>", methods = ["POST"])
+@login_required
 def delete(id):
 	entry = database.get_or_404(PortfolioEntry, id)
 	database.session.delete(entry)
