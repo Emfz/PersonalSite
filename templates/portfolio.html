@@ -24,7 +24,13 @@
 							{% for tag in post.category_tag.split(",") %}
 								<p class="language-tag">{{ tag }}</p>
 							{% endfor %}
-							<p class="portfolio-card-date-tag">| Post date: {{ post.date }}</p>
+							<p class="portfolio-card-date-tag">
+								| Post date: {{ post.date }}
+								{% if current_user.is_authenticated: %}
+									<a href="" class="edit-icon"><i class="bi bi-pencil-fill"></i></a>
+									<a href="" class="edit-icon"><i class="bi bi-file-earmark-x-fill"></i></a>
+								{% endif %}
+							</p>
 						</div>
 					</div>
 

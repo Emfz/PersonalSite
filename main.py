@@ -1,25 +1,34 @@
-from flask import Flask, render_template, url_for, request, redirect
-import time
+from flask import Flask, render_template, url_for, request, redirect, flash
 from datetime import date
 from flask_sqlalchemy import SQLAlchemy
-from wtforms import Form, PasswordField, StringField, TextAreaField, SelectMultipleField, SubmitField, DateField
+from wtforms import Form, PasswordField, StringField, SelectMultipleField, SubmitField
 from wtforms.validators import DataRequired
 from flask_ckeditor import CKEditor, CKEditorField
+from werkzeug.security import check_password_hash
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+from dotenv import dotenv_values
 
+env_values = dotenv_values(".env")
 
 app = Flask(__name__)
+app.secret_key = env_values.get("SECRET_KEY")
+
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///portfolio.db"
 database = SQLAlchemy(app)
 
 ckeditor = CKEditor(app)
 
-# today = time.localtime()
+login_manager = LoginManager(app)
+
 today = date.today()
-# year = today.tm_year
 year = today.year
 
 
+class LoginForm(Form):
+	user = StringField("User", validators = [DataRequired()])
+	password = PasswordField("Password", validators = [DataRequired()])
+	submit = SubmitField()
 
 class PortfolioEntryCreationForm(Form):
 	title = StringField("Title", validators = [DataRequired()])
@@ -38,6 +47,12 @@ class PortfolioEntry(database.Model):
 	date = database.Column(database.Date, nullable = False)
 	body = database.Column(database.Text, nullable = False)
 
+class User(UserMixin):
+	def __init__(self) -> None:
+		super().__init__()
+		self.id = 0
+	def get_id(self):
+		return self.id
 
 with app.app_context():
 	database.create_all()
@@ -85,6 +100,33 @@ def create_portfolio_entry():
 		database.session.commit()
 		return redirect(url_for('portfolio'))
 	return render_template("newPost.html", year = year, form = form)
+
+@app.route("/login", methods = ["GET", "POST"])
+def login():
+	form = LoginForm(request.form)
+	if request.method == "POST":
+		user_hash = env_values.get("USER_HASH")
+		password_hash = env_values.get("PASSWORD_HASH")
+		user = form.user.data
+		password = form.password.data
+		if check_password_hash(user_hash, user) and check_password_hash(password_hash, password):
+			login_user(User())
+			return redirect(url_for('portfolio'))
+		flash("Incorrect credentials")
+	return render_template("login.html", form = form)
+
+
+# Login manager
+@login_manager.user_loader
+def load_user(user_id):
+	if user_id == 0:
+		return User()
+	return None
+
+@app.route("/logout")
+def logout():
+	logout_user()
+	return redirect(url_for("home"))
 
 
 
