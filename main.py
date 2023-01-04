@@ -167,6 +167,15 @@ def logout():
 	return redirect(url_for("home"))
 
 
+# Error pages
+@app.errorhandler(404)
+def error404(error):
+	return render_template("error404.html", year = year), 404
+
+@app.errorhandler(401)
+def error401(error):
+	return render_template("error401.html", year = year), 401
+
 
 if __name__ == "__main__":
 	app.run(debug=True, host="0.0.0.0")
