@@ -105,7 +105,7 @@ def create_portfolio_entry():
 @app.route("/login", methods = ["GET", "POST"])
 def login():
 	form = LoginForm(request.form)
-	if request.method == "POST":
+	if request.method == "POST" and form.validate():
 		user_hash = env_values.get("USER_HASH")
 		password_hash = env_values.get("PASSWORD_HASH")
 		user = form.user.data
@@ -135,8 +135,15 @@ def delete(id):
 @login_required
 def edit_entry(id):
 	entry = database.get_or_404(PortfolioEntry, id)
-	if request.method == "POST":
+	if request.method == "GET":
+		form = PortfolioEntryCreationForm(title = entry.title,
+									subtitle = entry.subtitle,
+									abstract = entry.abstract,
+									category_tag = entry.category_tag.split(","),
+									body = entry.body)
+	else:
 		form = PortfolioEntryCreationForm(request.form)
+	if request.method == "POST" and form.validate():
 		entry.title = form.title.data
 		entry.subtitle = form.subtitle.data
 		entry.abstract = form.abstract.data
@@ -144,12 +151,6 @@ def edit_entry(id):
 		entry.body = form.body.data
 		database.session.commit()
 		return redirect(url_for('portfolio'))
-	else:	
-		form = PortfolioEntryCreationForm(title = entry.title,
-									subtitle = entry.subtitle,
-									abstract = entry.abstract,
-									category_tag = entry.category_tag.split(","),
-									body = entry.body)
 	return render_template("editEntry.html", year = year, form = form, id = entry.id)
 
 

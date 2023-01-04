@@ -51,6 +51,13 @@ nav{
 
 .navbar-brand{
 	padding-left: 1rem;
+	font-size: 3rem;
+	color: var(--neon-text-color);
+	line-height: 0.5;
+	text-shadow: 2px 2px 1px var(--neon-border-color),
+				-2px 2px 1px var(--neon-border-color2),
+				2px -2px 1px var(--neon-border-color),
+				-2px -2px 1px var(--neon-border-color2);
 }
 
 .nav-item{
@@ -87,6 +94,7 @@ nav{
 }
 
 .subtitle{
+	color: var(--lighter);
 	font-size: 2.5rem;
 	margin-bottom: 2rem;
 	margin-top: 2rem;
@@ -109,9 +117,11 @@ nav{
 }
 
 .socials-link{
+	color: var(--light);
+	display: inline-block;
 	font-size: 2rem;
 	line-height: 0;
-	color: var(--light);
+	margin: 0 10px 10px;
 }
 
 .socials-link:hover{
@@ -124,7 +134,7 @@ nav{
 	color: var(--light);
 	text-decoration: none;
 	font-weight: 600;
-	margin: 1rem;
+	margin: 5px;
 }
 
 .text-link:hover{

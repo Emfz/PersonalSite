@@ -2,13 +2,15 @@
 	<div class="dark-section text-center footer">
 		{{year}}, developed by:
 		<p class="bold-text">Enrique Martínez Fernández</p>
-		<p><a href="https://mx.linkedin.com/"><i class="bi bi-linkedin socials-link"></i></a></p>
+		<a class="socials-link" href="https://www.linkedin.com/in/emfz"><i class="bi bi-linkedin"></i></a>
+		<a class="socials-link" href="https://www.github.com"><i class="bi bi-github"></i></a>
+		<br>
 		
 		{% if not current_user.is_authenticated: %}
-		<p class="text-link"><a href="{{ url_for('login') }}">Admin login</a></p>
+		<a class="text-link" href="{{ url_for('login') }}">Login</a>
 		{% else: %}
-			<p class="text-link"><a href="{{ url_for('logout') }}">Log out</a></p>
-			<p class="text-link"><a href="{{ url_for('create_portfolio_entry') }}">Create entry</a></p>
+			<a class="text-link" href="{{ url_for('logout') }}">Log out</a>
+			<a class="text-link" href="{{ url_for('create_portfolio_entry') }}">Create entry</a>
 		{% endif %}
 	</div>
 </footer>
