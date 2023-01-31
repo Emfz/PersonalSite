@@ -1,12 +1,15 @@
-from flask import Flask, render_template, url_for, request, redirect, flash
+from flask import Flask, render_template, url_for, request, redirect, flash, abort
 from datetime import date
 from flask_sqlalchemy import SQLAlchemy
-from wtforms import Form, PasswordField, StringField, SelectMultipleField, SubmitField
+from wtforms import Form, PasswordField, StringField, SelectMultipleField, SelectField, SubmitField
 from wtforms.validators import DataRequired
 from flask_ckeditor import CKEditor, CKEditorField
 from werkzeug.security import check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
 from dotenv import dotenv_values
+from math import ceil
+
+ENTRIES_PER_PAGE = 10
 
 env_values = dotenv_values(".env")
 
@@ -29,6 +32,9 @@ class LoginForm(Form):
 	user = StringField("User", validators = [DataRequired()])
 	password = PasswordField("Password", validators = [DataRequired()])
 	submit = SubmitField()
+
+class PortfolioPageSelectionForm(Form):
+	page_selector = SelectField("Page")
 
 class PortfolioEntryCreationForm(Form):
 	title = StringField("Title", validators = [DataRequired()])
@@ -56,16 +62,6 @@ class User(UserMixin):
 
 with app.app_context():
 	database.create_all()
-	# TestEntry = PortfolioEntry(title = "Emulating the Chip-8 processor",
-	# 							subtitle = "A flashback to the dawn of videogames.",
-	# 							abstract = "I'll walk you through how I emulated a retro console in a modern system.",
-	# 							category_tag = "c++,python,java",
-	# 							date = year,
-	# 							body = "ASDF")
-	# database.session.add(TestEntry)
-	# database.session.commit()
-
-
 
 @app.route("/")
 def home():
@@ -75,10 +71,36 @@ def home():
 def cv():
 	return render_template("cv.html", year = year)
 
-@app.route("/portfolio")
-def portfolio():
-	entries = PortfolioEntry.query.all()
-	return render_template("portfolio.html", year = year, entries = entries)
+@app.route("/portfolio/page-<int:page_number>", methods = ["GET", "POST"])
+def portfolio(page_number):
+	
+	if page_number == 0:
+		return abort(404)
+
+	page_selection_form = PortfolioPageSelectionForm(request.form)
+
+	if request.method == "POST":
+		return redirect(url_for('portfolio', page_number = page_selection_form.page_selector.data))
+	
+	entries = PortfolioEntry.query.order_by(PortfolioEntry.date.desc()).all()
+
+	if not entries:
+		return render_template("portfolio.html", year = year, entries = [])
+
+	total_entries = len(entries)
+	total_pages = ceil(total_entries / ENTRIES_PER_PAGE)
+	remaining_entries = total_entries - ENTRIES_PER_PAGE * (page_number - 1)
+	
+	page_selection_form.page_selector.choices  = [i for i in range(1, total_pages + 1)]
+
+	# Set the default selection of the selector field as the current page number
+	page_selection_form.page_selector.process_data(page_number)
+
+	if remaining_entries > 0:
+		starting_index = ENTRIES_PER_PAGE * (page_number - 1)
+		slicing_index = starting_index + min(remaining_entries, ENTRIES_PER_PAGE)
+		return render_template("portfolio.html", year = year, entries = entries[starting_index : slicing_index], total_pages = total_pages, current_page = page_number, form = page_selection_form)
+	return abort(404)
 
 @app.route("/portfolio/<int:id>")
 def portfolio_entry(id):
@@ -99,7 +121,7 @@ def create_portfolio_entry():
 						body = form.body.data)
 		database.session.add(new_entry)
 		database.session.commit()
-		return redirect(url_for('portfolio'))
+		return redirect(url_for('portfolio'), page_number = 1)
 	return render_template("newEntry.html", year = year, form = form)
 
 @app.route("/login", methods = ["GET", "POST"])
@@ -112,7 +134,7 @@ def login():
 		password = form.password.data
 		if check_password_hash(user_hash, user) and check_password_hash(password_hash, password):
 			login_user(User())
-			return redirect(url_for('portfolio'))
+			return redirect(url_for('portfolio'), page_number = 1)
 		flash("Incorrect credentials")
 	return render_template("login.html", form = form)
 
@@ -129,7 +151,7 @@ def delete(id):
 	entry = database.get_or_404(PortfolioEntry, id)
 	database.session.delete(entry)
 	database.session.commit()
-	return redirect(url_for('portfolio'))
+	return redirect(url_for('portfolio', page_number = 1))
 
 @app.route("/portfolio/edit/<int:id>", methods = ["GET", "POST"])
 @login_required
@@ -150,7 +172,7 @@ def edit_entry(id):
 		entry.category_tag = ','.join(form.category_tag.data)
 		entry.body = form.body.data
 		database.session.commit()
-		return redirect(url_for('portfolio'))
+		return redirect(url_for('portfolio', page_number = 1))
 	return render_template("editEntry.html", year = year, form = form, id = entry.id)
 
 

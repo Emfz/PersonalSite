@@ -11,30 +11,73 @@
 		<div class="row justify-content-center">
 
 			<div class="col-sm-12 col-md-8">
-			
-				{% for entry in entries: %}
+				{% if not entries: %}
+					<div class="text-center">
+						There are no entries yet...
+					</div>
+				{% else: %}
+					{% for entry in entries: %}
 
-					<div class="card portfolio-card">
-						<div class="card-body">
-							<a class="portfolio-card-header" href=" {{ url_for('portfolio_entry', id = entry.id) }}">{{ entry.title }}</a>
-							<h3 class="portfolio-card-subtitle">{{ entry.subtitle }}</h3>
+						<div class="card portfolio-card">
+							<div class="card-body">
+								<a class="portfolio-card-header" href=" {{ url_for('portfolio_entry', id = entry.id) }}">{{ entry.title }}</a>
+								<h3 class="portfolio-card-subtitle">{{ entry.subtitle }}</h3>
 
-							<hr class="hr-thick">
-							<p>{{ entry.abstract }}</p>
-							{% for tag in entry.category_tag.split(",") %}
-								<p class="language-tag">{{ tag }}</p>
-							{% endfor %}
-							<p class="portfolio-card-date-tag">
-								| entry date: {{ entry.date }}
-								{% if current_user.is_authenticated: %}
-									<a href="{{ url_for('edit_entry', id = entry.id) }}" class="edit-icon"><i class="bi bi-pencil-fill"></i></a>
-									<a href="{{ url_for('delete_confirmation', id = entry.id) }}" class="edit-icon"><i class="bi bi-file-earmark-x-fill"></i></a>
+								<hr class="hr-thick">
+								<p>{{ entry.abstract }}</p>
+								{% for tag in entry.category_tag.split(",") %}
+									<p class="language-tag">{{ tag }}</p>
+								{% endfor %}
+								<p class="portfolio-card-date-tag">
+									| entry date: {{ entry.date }}
+									{% if current_user.is_authenticated: %}
+										<a href="{{ url_for('edit_entry', id = entry.id) }}" class="edit-icon"><i class="bi bi-pencil-fill"></i></a>
+										<a href="{{ url_for('delete_confirmation', id = entry.id) }}" class="edit-icon"><i class="bi bi-file-earmark-x-fill"></i></a>
+									{% endif %}
+								</p>
+							</div>
+						</div>
+
+					{% endfor %}
+
+					<div class="text-center small-text">
+						Page selection
+
+
+						{% if total_pages <= 10: %}
+							<p>
+								{% if current_page != 1: %}
+									<a class="text-link" href="{{ url_for('portfolio', page_number = current_page - 1) }}">
+										<i class="bi bi-caret-left-fill"></i>
+									</a>
+								{% endif %}
+
+								{% for i in range(1, total_pages + 1): %}
+									<a class="text-link" href="{{ url_for('portfolio', page_number = i) }}">
+										{% if i == current_page: %}
+											<u>{{ i }}</u>
+										{% else: %}
+											{{ i }}
+										{% endif %}
+									</a>
+								{% endfor %}
+
+								{% if current_page < total_pages: %}
+									<a class="text-link" href="{{ url_for('portfolio', page_number = current_page + 1) }}">
+										<i class="bi bi-caret-right-fill"></i>
+									</a>
 								{% endif %}
 							</p>
-						</div>
-					</div>
 
-				{% endfor %}
+						{% endif%}
+
+						<form method="post" action="{{ url_for('portfolio', page_number = 2) }}">
+								{{ form.page_selector(onchange = "submit()") }}
+						</form>
+					</div>
+					
+
+				{% endif %}
 			</div>
 			
 		</div>		
