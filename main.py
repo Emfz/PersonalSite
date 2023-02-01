@@ -69,10 +69,10 @@ class User(UserMixin):
 		return self.id
 
 
-
+portfolio_cache = []
 with app.app_context():
 	database.create_all()
-
+	portfolio_cache = PortfolioEntry.query.order_by(PortfolioEntry.date.desc()).all()
 
 # Routes
 
@@ -99,7 +99,7 @@ def portfolio(page_number):
 	if request.method == "POST":
 		return redirect(url_for('portfolio', page_number = page_selection_form.page_selector.data))
 	
-	entries = PortfolioEntry.query.order_by(PortfolioEntry.date.desc()).all()
+	entries = portfolio_cache
 
 	if not entries:
 		return render_template("portfolio.html", year = year, entries = [])
@@ -142,6 +142,8 @@ def create_portfolio_entry():
 						body = form.body.data)
 		database.session.add(new_entry)
 		database.session.commit()
+		global portfolio_cache
+		portfolio_cache = PortfolioEntry.query.order_by(PortfolioEntry.date.desc()).all()
 		return redirect(url_for('portfolio', page_number = 1))
 	return render_template("newEntry.html", year = year, form = form)
 
@@ -157,6 +159,8 @@ def delete(id):
 	entry = database.get_or_404(PortfolioEntry, id)
 	database.session.delete(entry)
 	database.session.commit()
+	global portfolio_cache
+	portfolio_cache = PortfolioEntry.query.order_by(PortfolioEntry.date.desc()).all()
 	return redirect(url_for('portfolio', page_number = 1))
 
 @app.route("/portfolio/edit/<int:id>", methods = ["GET", "POST"])
@@ -178,6 +182,8 @@ def edit_entry(id):
 		entry.category_tag = ','.join(form.category_tag.data)
 		entry.body = form.body.data
 		database.session.commit()
+		global portfolio_cache
+		portfolio_cache = PortfolioEntry.query.order_by(PortfolioEntry.date.desc()).all()
 		return redirect(url_for('portfolio', page_number = 1))
 	return render_template("editEntry.html", year = year, form = form, id = entry.id)
 

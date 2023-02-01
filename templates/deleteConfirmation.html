@@ -12,7 +12,7 @@
 
 		<h1>Are you sure?</h1>
 		
-		<form action="{{ url_for('portfolio') }}" method="get">
+		<form action="{{ url_for('portfolio', page_number = 1) }}" method="get">
 			<button class="btn btn-secondary" type="submit">Cancel</button>
 		</form>
 		
