@@ -28,6 +28,8 @@ today = date.today()
 year = today.year
 
 
+
+# Forms
 class LoginForm(Form):
 	user = StringField("User", validators = [DataRequired()])
 	password = PasswordField("Password", validators = [DataRequired()])
@@ -44,6 +46,9 @@ class PortfolioEntryCreationForm(Form):
 	body = CKEditorField("Body", validators = [DataRequired()])	
 	submit = SubmitField()
 
+
+
+# Database models
 class PortfolioEntry(database.Model):
 	id = database.Column(database.Integer, primary_key = True)
 	title = database.Column(database.String, nullable = False)
@@ -53,6 +58,9 @@ class PortfolioEntry(database.Model):
 	date = database.Column(database.Date, nullable = False)
 	body = database.Column(database.Text, nullable = False)
 
+
+
+# User model
 class User(UserMixin):
 	def __init__(self) -> None:
 		super().__init__()
@@ -60,8 +68,13 @@ class User(UserMixin):
 	def get_id(self):
 		return self.id
 
+
+
 with app.app_context():
 	database.create_all()
+
+
+# Routes
 
 @app.route("/")
 def home():
@@ -71,6 +84,10 @@ def home():
 def cv():
 	return render_template("cv.html", year = year)
 
+
+
+
+# Portfolio routes
 @app.route("/portfolio/page-<int:page_number>", methods = ["GET", "POST"])
 def portfolio(page_number):
 	
@@ -107,6 +124,10 @@ def portfolio_entry(id):
 	entry = database.get_or_404(PortfolioEntry, id)
 	return render_template("portfolioEntryTemplate.html", year = year, entry = entry)
 
+
+
+
+# Create, update, delete portfolio entries
 @app.route("/portfolio/add-entry", methods = ["GET", "POST"])
 @login_required
 def create_portfolio_entry():
@@ -121,23 +142,8 @@ def create_portfolio_entry():
 						body = form.body.data)
 		database.session.add(new_entry)
 		database.session.commit()
-		return redirect(url_for('portfolio'), page_number = 1)
+		return redirect(url_for('portfolio', page_number = 1))
 	return render_template("newEntry.html", year = year, form = form)
-
-@app.route("/login", methods = ["GET", "POST"])
-def login():
-	form = LoginForm(request.form)
-	if request.method == "POST" and form.validate():
-		user_hash = env_values.get("USER_HASH")
-		password_hash = env_values.get("PASSWORD_HASH")
-		user = form.user.data
-		password = form.password.data
-		if check_password_hash(user_hash, user) and check_password_hash(password_hash, password):
-			login_user(User())
-			return redirect(url_for('portfolio'), page_number = 1)
-		flash("Incorrect credentials")
-	return render_template("login.html", form = form)
-
 
 @app.route("/portfolio/delete-confirmation/<int:id>")
 @login_required
@@ -176,6 +182,22 @@ def edit_entry(id):
 	return render_template("editEntry.html", year = year, form = form, id = entry.id)
 
 
+
+# Login
+@app.route("/login", methods = ["GET", "POST"])
+def login():
+	form = LoginForm(request.form)
+	if request.method == "POST" and form.validate():
+		user_hash = env_values.get("USER_HASH")
+		password_hash = env_values.get("PASSWORD_HASH")
+		user = form.user.data
+		password = form.password.data
+		if check_password_hash(user_hash, user) and check_password_hash(password_hash, password):
+			login_user(User())
+			return redirect(url_for('portfolio', page_number = 1))
+		flash("Incorrect credentials")
+	return render_template("login.html", form = form)
+
 # Login manager
 @login_manager.user_loader
 def load_user(user_id):
@@ -187,6 +209,8 @@ def load_user(user_id):
 def logout():
 	logout_user()
 	return redirect(url_for("home"))
+
+
 
 
 # Error pages
