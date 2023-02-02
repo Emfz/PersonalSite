@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, request, redirect, flash, abo
 from datetime import date
 from flask_sqlalchemy import SQLAlchemy
 from wtforms import Form, PasswordField, StringField, SelectMultipleField, SelectField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length, Regexp
 from flask_ckeditor import CKEditor, CKEditorField
 from werkzeug.security import check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
@@ -29,8 +29,8 @@ login_manager = LoginManager(app)
 
 # Forms
 class LoginForm(Form):
-	user = StringField("User", validators = [DataRequired()])
-	password = PasswordField("Password", validators = [DataRequired()])
+	user = StringField("User", validators = [DataRequired(), Length(max = 10), Regexp("^[^\",'<>\{\}* ]*$")])
+	password = PasswordField("Password", validators = [DataRequired(), Length(min = 1, max = 30), Regexp("^[^\",'<>\{\}* ]*$")])
 	submit = SubmitField()
 
 class PortfolioPageSelectionForm(Form):
@@ -194,7 +194,10 @@ def edit_entry(id):
 @app.route("/login", methods = ["GET", "POST"])
 def login():
 	form = LoginForm(request.form)
-	if request.method == "POST" and form.validate():
+	if request.method == "POST":
+		if not form.validate():
+			flash("The input has a forbidden character")
+			return redirect(url_for('login'))
 		user_hash = env_values.get("USER_HASH")
 		password_hash = env_values.get("PASSWORD_HASH")
 		user = form.user.data
@@ -203,7 +206,7 @@ def login():
 			login_user(User())
 			return redirect(url_for('portfolio', page_number = 1))
 		flash("Incorrect credentials")
-	return render_template("login.html", form = form)
+	return render_template("login.html", year = get_date().year, form = form)
 
 # Login manager
 @login_manager.user_loader
