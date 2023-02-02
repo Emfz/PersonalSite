@@ -24,8 +24,6 @@ ckeditor = CKEditor(app)
 
 login_manager = LoginManager(app)
 
-today = date.today()
-year = today.year
 
 
 
@@ -57,6 +55,7 @@ class PortfolioEntry(database.Model):
 	category_tag = database.Column(database.String(100))
 	date = database.Column(database.Date, nullable = False)
 	body = database.Column(database.Text, nullable = False)
+	last_edit_date = database.Column(database.Date, nullable = False)
 
 
 
@@ -78,11 +77,11 @@ with app.app_context():
 
 @app.route("/")
 def home():
-	return render_template("index.html", year = year)
+	return render_template("index.html", year = get_date().year)
 
 @app.route("/cv")
 def cv():
-	return render_template("cv.html", year = year)
+	return render_template("cv.html", year = get_date().year)
 
 
 
@@ -102,7 +101,7 @@ def portfolio(page_number):
 	entries = portfolio_cache
 
 	if not entries:
-		return render_template("portfolio.html", year = year, entries = [])
+		return render_template("portfolio.html", year = get_date().year, entries = [])
 
 	total_entries = len(entries)
 	total_pages = ceil(total_entries / ENTRIES_PER_PAGE)
@@ -116,13 +115,13 @@ def portfolio(page_number):
 	if remaining_entries > 0:
 		starting_index = ENTRIES_PER_PAGE * (page_number - 1)
 		slicing_index = starting_index + min(remaining_entries, ENTRIES_PER_PAGE)
-		return render_template("portfolio.html", year = year, entries = entries[starting_index : slicing_index], total_pages = total_pages, current_page = page_number, form = page_selection_form)
+		return render_template("portfolio.html", year = get_date().year, entries = entries[starting_index : slicing_index], total_pages = total_pages, current_page = page_number, form = page_selection_form)
 	return abort(404)
 
 @app.route("/portfolio/<int:id>")
 def portfolio_entry(id):
 	entry = database.get_or_404(PortfolioEntry, id)
-	return render_template("portfolioEntryTemplate.html", year = year, entry = entry)
+	return render_template("portfolioEntryTemplate.html", year = get_date().year, entry = entry)
 
 
 
@@ -132,26 +131,27 @@ def portfolio_entry(id):
 @login_required
 def create_portfolio_entry():
 	form = PortfolioEntryCreationForm(request.form)
+	today = get_date()
 	if request.method == "POST" and form.validate():
-		date = today
 		new_entry = PortfolioEntry(title = form.title.data,
 						subtitle = form.subtitle.data,
 						abstract = form.abstract.data,
 						category_tag = ','.join(form.category_tag.data),
-						date = date,
-						body = form.body.data)
+						date = today,
+						body = form.body.data,
+						last_edit_date = today)
 		database.session.add(new_entry)
 		database.session.commit()
 		global portfolio_cache
 		portfolio_cache = PortfolioEntry.query.order_by(PortfolioEntry.date.desc()).all()
 		return redirect(url_for('portfolio', page_number = 1))
-	return render_template("newEntry.html", year = year, form = form)
+	return render_template("newEntry.html", year = today.year, form = form)
 
 @app.route("/portfolio/delete-confirmation/<int:id>")
 @login_required
 def delete_confirmation(id):
 	entry = database.get_or_404(PortfolioEntry, id)
-	return render_template("deleteConfirmation.html", year = year, entry = entry)
+	return render_template("deleteConfirmation.html", year = get_date().year, entry = entry)
 
 @app.route("/portfolio/delete/<int:id>", methods = ["POST"])
 @login_required
@@ -181,11 +181,12 @@ def edit_entry(id):
 		entry.abstract = form.abstract.data
 		entry.category_tag = ','.join(form.category_tag.data)
 		entry.body = form.body.data
+		entry.last_edit_date = get_date()
 		database.session.commit()
 		global portfolio_cache
 		portfolio_cache = PortfolioEntry.query.order_by(PortfolioEntry.date.desc()).all()
 		return redirect(url_for('portfolio', page_number = 1))
-	return render_template("editEntry.html", year = year, form = form, id = entry.id)
+	return render_template("editEntry.html", year = get_date().year, form = form, id = entry.id)
 
 
 
@@ -222,11 +223,17 @@ def logout():
 # Error pages
 @app.errorhandler(404)
 def error404(error):
-	return render_template("error404.html", year = year), 404
+	return render_template("error404.html", year = get_date().year), 404
 
 @app.errorhandler(401)
 def error401(error):
-	return render_template("error401.html", year = year), 401
+	return render_template("error401.html", year = get_date().year), 401
+
+
+def get_date():
+	return date.today()
+
+
 
 
 if __name__ == "__main__":

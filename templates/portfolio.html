@@ -29,7 +29,7 @@
 									<p class="language-tag">{{ tag }}</p>
 								{% endfor %}
 								<p class="portfolio-card-date-tag">
-									| entry date: {{ entry.date }}
+									| Entry date: {{ entry.date }} | Last edit: {{ entry.last_edit_date }}
 									{% if current_user.is_authenticated: %}
 										<a href="{{ url_for('edit_entry', id = entry.id) }}" class="edit-icon"><i class="bi bi-pencil-fill"></i></a>
 										<a href="{{ url_for('delete_confirmation', id = entry.id) }}" class="edit-icon"><i class="bi bi-file-earmark-x-fill"></i></a>

@@ -8,7 +8,7 @@
 		</div>
 	</div>
 	<div class="container-fluid portfolio-entry-body">
-		<h3 class="portfolio-entry-date-and-tags">Posted by Enrique Martínez Fernández on {{ entry.date }}. Tags: {{ entry.category_tag.replace(",", "/") }}</h3>
+		<h3 class="portfolio-entry-date-and-tags">Posted by Enrique Martínez Fernández on {{ entry.date }}. Last edit on {{ entry.last_edit_date }}. <br> Tags: {{ entry.category_tag.replace(",", "/") }}</h3>
 		{{ entry.body | safe}}
 	</div>
 {% endblock %}
