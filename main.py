@@ -17,7 +17,7 @@ app = Flask(__name__)
 app.secret_key = env_values.get("SECRET_KEY")
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///portfolio.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = env_values.get("DATABASE_URI")
 database = SQLAlchemy(app)
 
 ckeditor = CKEditor(app)
@@ -240,5 +240,6 @@ def get_date():
 
 
 if __name__ == "__main__":
-	app.run(debug=True, host="0.0.0.0")
+	# app.run(debug=True, host="0.0.0.0")
 	# app.run(debug=True)
+	app.run()
