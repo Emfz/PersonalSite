@@ -25,6 +25,7 @@ app.config["SQLALCHEMY_POOL_RECYCLE"] = 9
 database = SQLAlchemy(app)
 
 ckeditor = CKEditor(app)
+app.config['CKEDITOR_ENABLE_CODESNIPPET'] = True
 
 login_manager = LoginManager(app)
 
