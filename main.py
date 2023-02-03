@@ -49,7 +49,7 @@ class PortfolioEntryCreationForm(Form):
 # Database models
 class PortfolioEntry(database.Model):
 	id = database.Column(database.Integer, primary_key = True)
-	title = database.Column(database.String, nullable = False)
+	title = database.Column(database.String(150), nullable = False)
 	subtitle = database.Column(database.String(150))
 	abstract = database.Column(database.String(300))
 	category_tag = database.Column(database.String(100))
@@ -240,6 +240,6 @@ def get_date():
 
 
 if __name__ == "__main__":
-	# app.run(debug=True, host="0.0.0.0")
+	app.run(debug=True, host="0.0.0.0")
 	# app.run(debug=True)
-	app.run()
+	# app.run()
