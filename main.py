@@ -21,6 +21,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = env_values.get("DATABASE_URI")
 database = SQLAlchemy(app)
 
 ckeditor = CKEditor(app)
+app.config['CKEDITOR_ENABLE_CODESNIPPET'] = True
 
 login_manager = LoginManager(app)
 
