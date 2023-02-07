@@ -16,11 +16,12 @@ env_values = dotenv_values(".env")
 app = Flask(__name__)
 app.secret_key = env_values.get("SECRET_KEY")
 
-app.config['CKEDITOR_ENABLE_CODESNIPPET'] = True
-app.config['CKEDITOR_HEIGHT'] = 400
+app.config["CKEDITOR_ENABLE_CODESNIPPET"] = True
+app.config["CKEDITOR_CODE_THEME"] = "paraiso.dark"
+app.config["CKEDITOR_HEIGHT"] = 1000
 
 app.config["SQLALCHEMY_DATABASE_URI"] = env_values.get("DATABASE_URI")
-app.config['SQLALCHEMY_POOL_RECYCLE'] = 200
+app.config["SQLALCHEMY_POOL_RECYCLE"] = 9
 database = SQLAlchemy(app)
 
 ckeditor = CKEditor(app)
