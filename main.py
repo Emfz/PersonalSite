@@ -18,10 +18,10 @@ app.secret_key = env_values.get("SECRET_KEY")
 
 app.config["CKEDITOR_ENABLE_CODESNIPPET"] = True
 app.config["CKEDITOR_CODE_THEME"] = "paraiso.dark"
-app.config["CKEDITOR_HEIGHT"] = 1000
+app.config["CKEDITOR_HEIGHT"] = 600
 
 app.config["SQLALCHEMY_DATABASE_URI"] = env_values.get("DATABASE_URI")
-app.config["SQLALCHEMY_POOL_RECYCLE"] = 9
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_pre_ping" : True}
 database = SQLAlchemy(app)
 
 ckeditor = CKEditor(app)
